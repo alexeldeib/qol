@@ -15,8 +15,10 @@ jobs:
       run:  |
         set -euxo pipefail
         echo $(whoami)
-        sudo apt-get update && sudo apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
-        mkdir -m 0755 /nix && sudo chown root /nix
+        sudo apt-get update
+        sudo apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
+        sudo mkdir -m 0755 /nix
+        sudo chown root /nix
         curl -o install-nix-2.11.1 https://releases.nixos.org/nix/nix-2.11.1/install
         curl -o install-nix-2.11.1.asc https://releases.nixos.org/nix/nix-2.11.1/install.asc
         gpg2 --keyserver hkps://keyserver.ubuntu.com --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
