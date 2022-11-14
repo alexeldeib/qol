@@ -29,11 +29,11 @@ jobs:
         sudo mkdir -p /home/nonroot
         sudo chown nonroot /home/nonroot
 
+        sudo mkdir -p /etc/sudoers.d
         sudo tee /etc/sudoers.d/$(whoami) > /dev/null <<EOF
         $(whoami) ALL=(ALL) NOPASSWD:ALL
         EOF
 
-        sudo mkdir -p /etc/sudoers.d
         sudo tee /etc/sudoers.d/nonroot > /dev/null <<EOF
         nonroot ALL=(ALL) NOPASSWD:ALL
         EOF
