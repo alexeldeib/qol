@@ -35,7 +35,7 @@ jobs:
         sudo mkdir -p /etc/nix
         sudo mkdir -p /root/.config/nix
 
-        sudo tee /etc/nix/nix.conf > /dev/nill <<EOF
+        sudo tee /etc/nix/nix.conf > /dev/null <<EOF
         build-users-group = nixbld
         trusted-users = root nonroot
         EOF
