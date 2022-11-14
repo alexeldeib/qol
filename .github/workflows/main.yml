@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  # push:
+  #   branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: echo time
+      run:  |
+        set -euo pipefail
+        echo $(whoami)
+        apt-get update && apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
+        mkdir -m 0755 /nix && chown root /nix
+        curl -o install-nix-2.7.0 https://releases.nixos.org/nix/nix-2.7.0/install
+        curl -o install-nix-2.7.0.asc https://releases.nixos.org/nix/nix-2.7.0/install.asc
+        gpg2 --keyserver hkps://keyserver.ubuntu.com --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
+        gpg2 --verify ./install-nix-2.7.0.asc
+
+        groupadd nonroot -g 65532
+        useradd nonroot -u 65532 -g 65532
+        mkdir -p /home/nonroot
+
+        mkdir -p /etc/sudoers.d
+        tee /etc/sudoers.d/nonroot > /dev/null <<EOF
+        nonroot ALL=(ALL) NOPASSWD:ALL
+        EOF
+
+        mkdir -p /etc/nix
+        mkdir -p /root/.config/nix
+
+        tee /etc/nix/nix.conf > /dev/nill <<EOF
+        build-users-group = nixbld
+        trusted-users = root nonroot
+        EOF
+
+        tee /root/.config/nix/nix.conf > /dev/null <<EOF
+        experimental-features = nix-command flakes
+        EOF
+
+        su nonroot -c 'sh ./install-nix-2.7.0 --daemon'
+        set -x
+        su nonroot -c '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && which nix-daemon'
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        echo "which nix-daemon"
+        which nix-daemon
+        nix-shell -p nix-info --run "nix-info -m"

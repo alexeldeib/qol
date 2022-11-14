@@ -31,7 +31,9 @@
         devShell = mkShell {
           buildInputs = [
             git
+            goss
             moreutils
+            which
           ];
         };
 
