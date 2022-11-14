@@ -13,14 +13,14 @@ jobs:
     - uses: actions/checkout@v2
     - name: echo time
       run:  |
-        set -euo pipefail
+        set -euxo pipefail
         echo $(whoami)
-        apt-get update && apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
-        mkdir -m 0755 /nix && chown root /nix
-        curl -o install-nix-2.7.0 https://releases.nixos.org/nix/nix-2.7.0/install
-        curl -o install-nix-2.7.0.asc https://releases.nixos.org/nix/nix-2.7.0/install.asc
+        sudo apt-get update && sudo apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
+        mkdir -m 0755 /nix && sudo chown root /nix
+        curl -o install-nix-2.11.1 https://releases.nixos.org/nix/nix-2.11.1/install
+        curl -o install-nix-2.11.1.asc https://releases.nixos.org/nix/nix-2.11.1/install.asc
         gpg2 --keyserver hkps://keyserver.ubuntu.com --recv-keys B541D55301270E0BCF15CA5D8170B4726D7198DE
-        gpg2 --verify ./install-nix-2.7.0.asc
+        gpg2 --verify ./install-nix-2.11.1.asc
 
         groupadd nonroot -g 65532
         useradd nonroot -u 65532 -g 65532
@@ -43,7 +43,7 @@ jobs:
         experimental-features = nix-command flakes
         EOF
 
-        su nonroot -c 'sh ./install-nix-2.7.0 --daemon'
+        su nonroot -c 'sh ./install-nix-2.11.1 --daemon'
         set -x
         su nonroot -c '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && which nix-daemon'
         source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
