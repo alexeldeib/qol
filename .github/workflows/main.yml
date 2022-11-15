@@ -95,4 +95,4 @@ jobs:
         echo "which nix-daemon"
         which nix-daemon
         nix-shell -p nix-info --run "nix-info -m"
-        pkill nix-daemon
+        sudo pkill nix-daemon
