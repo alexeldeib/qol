@@ -50,9 +50,9 @@ jobs:
         experimental-features = nix-command flakes
         EOF
 
-        su nonroot -c 'sh ./install-nix-2.11.1 --daemon'
+        sudo su nonroot -c 'sh ./install-nix-2.11.1 --daemon'
         set -x
-        su nonroot -c '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && which nix-daemon'
+        sudo su nonroot -c '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && which nix-daemon'
         source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         echo "which nix-daemon"
         which nix-daemon
