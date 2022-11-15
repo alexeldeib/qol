@@ -17,11 +17,14 @@
       with pkgs;
       {
         # Utilized by `nix build`
-        # packages = {
-        #   default = stdenv.mkDerivation { };
-        # };
+        packages = {
+          default = stdenv.mkDerivation {
+              name = "hello";
+              src = ./.;
+           };
+        };
 
-        # defaultPackage = self.packages.${system}.default;
+        defaultPackage = self.packages.${system}.default;
 
         # Utilized by `nix bundle -- .#<name>`
         # bundlers.default = bundlers.bundlers.${system}.toArx;
@@ -31,7 +34,9 @@
         devShell = mkShell {
           buildInputs = [
             git
+            goss
             moreutils
+            which
           ];
         };
 

@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  # push:
+  #   branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    # - name: Cache
+    #   uses: actions/cache@v3
+    #   id: cache
+    #   with:
+    #     path: |
+    #       /nix/store/**
+    #     key: ${{ runner.os }}-nix-${{ github.sha }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-nix-
+    - uses: cachix/install-nix-action@v18
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - uses: cachix/cachix-action@v11
+      with:
+        name: alexeldeib
+    - run: nix build
+    - name: run
+      run:  |
+        set -euxo pipefail
+
+        nix profile install .
