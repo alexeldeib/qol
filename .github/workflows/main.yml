@@ -16,8 +16,16 @@ jobs:
       id: cache-nix
       with:
         path: |
-          /nix
-          /etc/nix/nix.conf
+          /nix/store/**
+          # Missing something?
+          /nix/var/nix/*/*
+          /nix/var/nix/db/*
+          /nix/var/nix/db/*/**
+          !/nix/var/nix/daemon-socket/socket
+          !/nix/var/nix/userpool/*
+          !/nix/var/nix/gc.lock
+          !/nix/var/nix/db/big-lock
+          !/nix/var/nix/db/reserved
         key: ${{ runner.os }}-nix-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-nix-
@@ -27,7 +35,7 @@ jobs:
         set -euxo pipefail
         sudo apt-get update
         sudo apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
-        sudo mkdir -m 0755 /nix
+        sudo mkdir -m 0777 /nix
         sudo chown root /nix
         curl -o install-nix-2.11.1 https://releases.nixos.org/nix/nix-2.11.1/install
         curl -o install-nix-2.11.1.asc https://releases.nixos.org/nix/nix-2.11.1/install.asc
@@ -49,14 +57,14 @@ jobs:
         EOF
 
         sudo mkdir -p /etc/nix
-        sudo mkdir -p /root/.config/nix
+        sudo mkdir -p $HOME/.config/nix
 
         sudo tee /etc/nix/nix.conf > /dev/null <<EOF
         build-users-group = nixbld
         trusted-users = root nonroot
         EOF
 
-        sudo tee /root/.config/nix/nix.conf > /dev/null <<EOF
+        sudo tee $HOME/.config/nix/nix.conf > /dev/null <<EOF
         experimental-features = nix-command flakes
         EOF
 
@@ -70,6 +78,19 @@ jobs:
     - name: do the thing
       run:  |
         set -euxo pipefail
+
+        sudo mkdir -p /etc/nix
+        sudo mkdir -p $HOME/.config/nix
+
+        sudo tee /etc/nix/nix.conf > /dev/null <<EOF
+        build-users-group = nixbld
+        trusted-users = root nonroot
+        EOF
+
+        sudo tee $HOME/.config/nix/nix.conf > /dev/null <<EOF
+        experimental-features = nix-command flakes
+        EOF
+
         source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         echo "which nix-daemon"
         which nix-daemon
