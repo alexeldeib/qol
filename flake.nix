@@ -18,7 +18,9 @@
       {
         # Utilized by `nix build`
         packages = {
-          default = stdenv.mkDerivation { };
+          default = stdenv.mkDerivation {
+              name = "hello";
+           };
         };
 
         defaultPackage = self.packages.${system}.default;
