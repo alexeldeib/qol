@@ -26,9 +26,3 @@ jobs:
     - uses: cachix/cachix-action@v11
       with:
         name: alexeldeib
-    - run: nix build
-    - name: run
-      run:  |
-        set -euxo pipefail
-
-        nix profile install .
