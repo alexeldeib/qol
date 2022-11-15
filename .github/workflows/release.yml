@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+  # pull_request:
+  #   branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch_depth: 0
+    # - name: Cache
+    #   uses: actions/cache@v3
+    #   id: cache
+    #   with:
+    #     path: |
+    #       /nix/store/**
+    #     key: ${{ runner.os }}-${{ github.sha }}
+    #     restore-keys: |
+    #       ${{ runner.os }}-
+    - uses: cachix/install-nix-action@v18
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - uses: cachix/cachix-action@v11
+      with:
+        name: alexeldeib
+    - run: nix build
+    - name: run
+      run:  |
+        set -euxo pipefail
+
+        nix profile install .
+    - name: Bump version and push tag
+      id: tag_version
+      uses: mathieudutour/github-tag-action@v6.1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        create_annotated_tag: true
+        default_bump: false
+    # - name: Create Release
+    #   uses: ncipollo/release-action@v1.11.2
