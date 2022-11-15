@@ -39,7 +39,6 @@ jobs:
     - name: Create Release
       uses: ncipollo/release-action@v1.11.2
       with:
-        generateReleaseNotes: false
+        generateReleaseNotes: true
         tag: ${{ steps.tag_version.outputs.new_tag }}
         name: ${{ steps.tag_version.outputs.new_tag }}
-        body: ${{ steps.tag_version.outputs.changelog }}
