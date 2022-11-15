@@ -11,10 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: echo time
-      run:  |
+    - name: Cache
+      uses: actions/cache@v3
+      id: cache-nix
+      with:
+        path: |
+          /nix
+          /etc/nix/nix.conf
+        key: ${{ runner.os }}-nix-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-nix-
+    - if: ${{ steps.cache-nix.outputs.cache-hit != 'true' }}
+      name: setup nix
+      run: |
         set -euxo pipefail
-        echo $(whoami)
         sudo apt-get update
         sudo apt-get install -yq -o DPkg::Options::=--force-confnew curl gnupg2 xz-utils sudo procps tree
         sudo mkdir -m 0755 /nix
@@ -53,6 +63,13 @@ jobs:
         sudo su nonroot -c 'sh ./install-nix-2.11.1 --daemon'
         set -x
         sudo su nonroot -c '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh && which nix-daemon'
+        source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        echo "which nix-daemon"
+        which nix-daemon
+        nix-shell -p nix-info --run "nix-info -m"
+    - name: do the thing
+      run:  |
+        set -euxo pipefail
         source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         echo "which nix-daemon"
         which nix-daemon
