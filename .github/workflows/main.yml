@@ -21,6 +21,7 @@ jobs:
           /nix/var/nix/*/*
           /nix/var/nix/db/*
           /nix/var/nix/db/*/**
+          !/nix/store/*-diagnostics-sandbox.lock
           !/nix/var/nix/daemon-socket/socket
           !/nix/var/nix/userpool/*
           !/nix/var/nix/gc.lock
