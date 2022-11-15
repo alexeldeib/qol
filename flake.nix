@@ -20,6 +20,7 @@
         packages = {
           default = stdenv.mkDerivation {
               name = "hello";
+              src = ./.;
            };
         };
 
