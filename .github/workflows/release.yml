@@ -31,7 +31,6 @@ jobs:
         name: alexeldeib
     - uses: actions/setup-node@v3
       with:
-        cache: npm
         node-version: current
     - run: npx semantic-release -d
       env:
