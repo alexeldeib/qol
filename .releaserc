@@ -33,5 +33,7 @@
                     { "type": "ci", "section": "Build/CI/CD"}
                 ]
             }
-        }]    ]
+        }],
+        "@semantic-release/changelog"
+    ]
 }
