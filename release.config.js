@@ -1,5 +1,3 @@
-const dateformat = import('dateformat');
-
 module.exports = {
     branches: [
         "main"
