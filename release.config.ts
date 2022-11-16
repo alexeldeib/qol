@@ -42,9 +42,9 @@ module.exports = {
                     date: function (date) {
                         return dateFormat(date, 'isoUtcDateTime')
                     },
-                    // committerDate: function (date) {
-                    //     return dateFormat(date, 'isoUtcDateTime')
-                    // },
+                    committerDate: function (date) {
+                        return dateFormat(date, 'isoUtcDateTime')
+                    },
                 }
             }
         ],
