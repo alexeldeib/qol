@@ -32,6 +32,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: current
+        cache: npm
     - run: npm install
     - run: npx semantic-release
       env:
