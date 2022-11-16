@@ -30,9 +30,9 @@ jobs:
       with:
         name: alexeldeib
     - uses: actions/setup-node@v3
-        with:
-          cache: npm
-          node-version: current
+      with:
+        cache: npm
+        node-version: current
     - run: npx semantic-release -d
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
