@@ -32,7 +32,10 @@
                     ]
                 },
                 "writerOpts": {
-                    "date": "dateFormat(new Date(), \"isoUtcDateTime\")"
+                    "date": "dateFormat(new Date(), \"isoUtcDateTime\")",
+                    "transform": {
+
+                    }
                 }
             } ],
         "@semantic-release/changelog"
