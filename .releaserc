@@ -35,8 +35,7 @@
                     "date": "dateFormat(new Date(), \"isoUtcDateTime\")"
                 }
             } ],
-        "@semantic-release/changelog",
-        "@semantic-release/git"
+        "@semantic-release/changelog"
     ],
     "preset": "conventionalcommits"
 }
