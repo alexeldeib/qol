@@ -29,16 +29,23 @@ jobs:
     - uses: cachix/cachix-action@v11
       with:
         name: alexeldeib
-    - name: Bump version and push tag
-      id: tag_version
-      uses: mathieudutour/github-tag-action@v6.1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        create_annotated_tag: true
-        default_bump: false
-    - name: Create Release
-      uses: ncipollo/release-action@v1.11.2
-      with:
-        generateReleaseNotes: "true"
-        tag: ${{ steps.tag_version.outputs.new_tag }}
-        name: ${{ steps.tag_version.outputs.new_tag }}
+    - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version: current
+    - run: npx semantic-release -d
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Bump version and push tag
+    #   id: tag_version
+    #   uses: mathieudutour/github-tag-action@v6.1
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     create_annotated_tag: true
+    #     default_bump: false
+    # - name: Create Release
+    #   uses: ncipollo/release-action@v1.11.2
+    #   with:
+    #     generateReleaseNotes: "true"
+    #     tag: ${{ steps.tag_version.outputs.new_tag }}
+    #     name: ${{ steps.tag_version.outputs.new_tag }}
