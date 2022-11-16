@@ -1,0 +1,25 @@
+{
+  "name": "qol",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alexeldeib/qol.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/alexeldeib/qol/issues"
+  },
+  "homepage": "https://github.com/alexeldeib/qol#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/github": "^8.0.6",
+    "dateformat": "^5.0.3",
+    "semantic-release": "^19.0.5"
+  }
+}
