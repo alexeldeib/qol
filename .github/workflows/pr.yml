@@ -24,6 +24,4 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: git remote -v; git status; git branch -r
-    - run: npx --no -- commitlint --from=$(git rev-parse remote/origin/main) -V
-    
+    - run: npx --no -- commitlint --from=origin/main -V
