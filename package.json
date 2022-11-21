@@ -18,5 +18,9 @@
   "homepage": "https://github.com/alexeldeib/qol#readme",
   "dependencies": {
     "conventional-changelog-conventionalcommits": "^5.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0"
   }
 }
