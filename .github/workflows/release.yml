@@ -34,7 +34,8 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: npx commitlint --from=$(git rev-parse origin/main) -V
+    - run: echo "$(git rev-parse origin/main)"
+    - run: npx --no -- commitlint --from=$(git rev-parse origin/main) -V
     - run: npx semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
