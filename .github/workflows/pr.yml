@@ -24,6 +24,6 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: echo "$(git log --pretty=oneline $(git rev-parse origin/main)..HEAD)"
-    - run: npx --no -- commitlint --from=$(git rev-parse origin/main) -V
+    - run: git remote -v; git status; git branch -r
+    - run: npx --no -- commitlint --from=$(git rev-parse remote/origin/main) -V
     
