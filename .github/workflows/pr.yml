@@ -24,4 +24,4 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: npx --no -- commitlint --from=origin/main -V
+    - run: npx --no commitlint -V
