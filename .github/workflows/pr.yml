@@ -25,4 +25,4 @@ jobs:
         cache: npm
     - run: npm install
     - run: git log --pretty=oneline; git remote -v; git branch; git branch -r
-    - run: npx --no commitlint -V --from=origin/main --to=HEAD
+    - run: npx --no -- commitlint -V --from=origin/main --to=HEAD
