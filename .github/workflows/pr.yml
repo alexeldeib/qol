@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ main ]
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +25,4 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: |
-        git log --pretty=oneline origin/main..HEAD
     - run: npx --no -- commitlint -V --from=origin/main --to=HEAD
