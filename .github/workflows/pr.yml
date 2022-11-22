@@ -24,5 +24,6 @@ jobs:
         node-version: current
         cache: npm
     - run: npm install
-    - run: git log --pretty=oneline origin/main..HEAD
+    - run: |
+        git log --pretty=oneline origin/main..HEAD
     - run: npx --no -- commitlint -V --from=origin/main --to=HEAD
